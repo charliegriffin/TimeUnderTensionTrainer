@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
 
@@ -20,6 +21,16 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    @IBAction func startButtonPressed(_ sender: UIButton) {
+        
+        let utterance = AVSpeechUtterance(string: "Ready. Begin.")
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        utterance.rate = AVSpeechUtteranceDefaultSpeechRate
+        
+        let synthesizer = AVSpeechSynthesizer()
+        synthesizer.speak(utterance)
+        
+    }
+    
 }
 
