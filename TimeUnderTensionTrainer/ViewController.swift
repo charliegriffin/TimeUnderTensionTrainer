@@ -11,15 +11,7 @@ import AVFoundation
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    var countdownTimer: Timer!
 
     @IBAction func startButtonPressed(_ sender: UIButton) {
         
@@ -30,6 +22,22 @@ class ViewController: UIViewController {
         let synthesizer = AVSpeechSynthesizer()
         synthesizer.speak(utterance)
         
+        startTimer()
+        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    func startTimer() {
+        countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCall), userInfo: nil, repeats: true)
+    }
+    
+    
+    @objc func timerCall(){
+        print("Timer executed")
     }
     
 }
