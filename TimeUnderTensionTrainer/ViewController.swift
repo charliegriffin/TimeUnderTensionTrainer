@@ -12,15 +12,10 @@ import AVFoundation
 class ViewController: UIViewController {
 
     var countdownTimer: Timer!
+    var totalTime = 11
 
+    @IBOutlet weak var timerLabel: UILabel!
     @IBAction func startButtonPressed(_ sender: UIButton) {
-        
-        let utterance = AVSpeechUtterance(string: "Ready. Begin.")
-        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
-        utterance.rate = AVSpeechUtteranceDefaultSpeechRate
-        
-        let synthesizer = AVSpeechSynthesizer()
-        synthesizer.speak(utterance)
         
         startTimer()
         
@@ -32,12 +27,31 @@ class ViewController: UIViewController {
     }
     
     func startTimer() {
-        countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCall), userInfo: nil, repeats: true)
+        countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
     }
     
+    @objc func updateTime() {
+        speakCount(phrase: String(totalTime))
+        timerLabel.text = "\(totalTime)"
+        
+        if totalTime != 0 {
+            totalTime -= 1
+        } else {
+            endTimer()
+        }
+    }
     
-    @objc func timerCall(){
-        print("Timer executed")
+    func endTimer() {
+        countdownTimer.invalidate()
+    }
+    
+    func speakCount(phrase: String) {
+        let utterance = AVSpeechUtterance(string: phrase)
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 1
+
+        let synthesizer = AVSpeechSynthesizer()
+        synthesizer.speak(utterance)
     }
     
 }
