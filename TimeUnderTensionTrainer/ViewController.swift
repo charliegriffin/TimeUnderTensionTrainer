@@ -13,20 +13,28 @@ class ViewController: UIViewController {
 
     var countdownTimer: Timer!
     var totalTime = 11
+    
+    class Action {
+        var name: String = ""
+        var duration: Int = 0
+    }
 
     @IBOutlet weak var timerLabel: UILabel!
     @IBAction func startButtonPressed(_ sender: UIButton) {
         
-        startTimer()
+        let firstAction = Action()
+        firstAction.name = "Down"
+        firstAction.duration = 4
+        startTimer(action: firstAction)
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
-    func startTimer() {
+    func startTimer(action: Action) {
+        print(action.name)
         countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
     }
     
