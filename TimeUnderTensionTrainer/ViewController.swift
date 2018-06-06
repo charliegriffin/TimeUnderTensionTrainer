@@ -13,6 +13,10 @@ class ViewController: UIViewController {
 
     var countdownTimer: Timer!
     var totalTime = 11
+    var currentAction = ""
+    var currentActionDuration = 0
+    var actions = [Action]()
+    var currentActionIndex = 0
     
     class Action {
         var name: String = ""
@@ -22,10 +26,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var timerLabel: UILabel!
     @IBAction func startButtonPressed(_ sender: UIButton) {
         
+        
         let firstAction = Action()
+        actions.append(firstAction)
         firstAction.name = "Down"
         firstAction.duration = 4
-        startTimer(action: firstAction)
+        let secondAction = Action()
+        secondAction.name = "Up"
+        secondAction.duration = 2
+        actions.append(secondAction)
+        currentAction = firstAction.name
+        currentActionDuration = firstAction.duration
+        startTimer()
         
     }
     
@@ -33,19 +45,34 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    func startTimer(action: Action) {
-        print(action.name)
+    func startTimer() {
+        print(currentAction)
+        totalTime = currentActionDuration
         countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
     }
     
     @objc func updateTime() {
-        speakCount(phrase: String(totalTime))
         timerLabel.text = "\(totalTime)"
+        if(totalTime == currentActionDuration){
+            print("Speaking current action")
+            speakCount(phrase: currentAction)
+        } else if (totalTime != 0) {
+            speakCount(phrase: String(totalTime))
+        }
         
-        if totalTime != 0 {
+        if totalTime > 1 {
             totalTime -= 1
         } else {
-            endTimer()
+            // Next Action
+            if(currentActionIndex < (actions.count - 1)){
+                currentActionIndex += 1
+            } else {
+                currentActionIndex = 0
+            }
+            currentAction = actions[currentActionIndex].name
+            currentActionDuration = actions[currentActionIndex].duration
+            totalTime = currentActionDuration
+            //endTimer()
         }
     }
     
