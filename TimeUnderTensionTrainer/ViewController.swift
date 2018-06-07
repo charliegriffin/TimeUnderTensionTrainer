@@ -9,21 +9,38 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
     var countdownTimer: Timer!
     var totalTime = 11
     var currentAction = ""
     var currentActionDuration = 0
     var actions = [Action]()
     var currentActionIndex = 0
+    var repCount = 0
+    
+    let listActions = ["Up","Pause","Down","Pause"]
     
     class Action {
         var name: String = ""
         var duration: Int = 0
     }
 
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return listActions.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel?.text = listActions[indexPath.row]
+        return cell
+    }
+
+    
+
+    @IBOutlet weak var actionList: UITableView!
     @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var repLabel: UILabel!
     @IBAction func startButtonPressed(_ sender: UIButton) {
         
         
@@ -68,6 +85,8 @@ class ViewController: UIViewController {
                 currentActionIndex += 1
             } else {
                 currentActionIndex = 0
+                repCount += 1
+                repLabel.text = "\(repCount)"
             }
             currentAction = actions[currentActionIndex].name
             currentActionDuration = actions[currentActionIndex].duration
