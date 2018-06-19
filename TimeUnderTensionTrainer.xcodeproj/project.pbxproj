@@ -13,6 +13,7 @@
 		7A361B9820BA23E4002A7231 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A361B9620BA23E4002A7231 /* Main.storyboard */; };
 		7A361B9A20BA23E5002A7231 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A361B9920BA23E5002A7231 /* Assets.xcassets */; };
 		7A361B9D20BA23E5002A7231 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A361B9B20BA23E5002A7231 /* LaunchScreen.storyboard */; };
+		7A361BA620D9289B002A7231 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A361BA520D9289B002A7231 /* Action.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		7A361B9920BA23E5002A7231 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7A361B9C20BA23E5002A7231 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7A361B9E20BA23E5002A7231 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7A361BA520D9289B002A7231 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		8C7023E9930A45DFBD1A97B5 /* Pods-TimeUnderTensionTrainer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeUnderTensionTrainer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TimeUnderTensionTrainer/Pods-TimeUnderTensionTrainer.debug.xcconfig"; sourceTree = "<group>"; };
 		BBCF360D9D68B308F3BF20DA /* Pods-TimeUnderTensionTrainer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeUnderTensionTrainer.release.xcconfig"; path = "Pods/Target Support Files/Pods-TimeUnderTensionTrainer/Pods-TimeUnderTensionTrainer.release.xcconfig"; sourceTree = "<group>"; };
 		BC6B5AB98A480F9B4567504A /* Pods_TimeUnderTensionTrainer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TimeUnderTensionTrainer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +85,7 @@
 		7A361BA420D7DA42002A7231 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
+				7A361BA520D9289B002A7231 /* Action.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A361B9520BA23E4002A7231 /* ViewController.swift in Sources */,
+				7A361BA620D9289B002A7231 /* Action.swift in Sources */,
 				7A361B9320BA23E4002A7231 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -375,7 +379,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 363UGLFU5J;
 				INFOPLIST_FILE = TimeUnderTensionTrainer/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.thecharliegriffin.TimeUnderTensionTrainer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -391,7 +398,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 363UGLFU5J;
 				INFOPLIST_FILE = TimeUnderTensionTrainer/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.thecharliegriffin.TimeUnderTensionTrainer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

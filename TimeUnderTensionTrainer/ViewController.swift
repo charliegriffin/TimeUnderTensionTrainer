@@ -8,8 +8,11 @@
 
 import UIKit
 import AVFoundation
+import RealmSwift
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    let realm = try! Realm()
     
     var countdownTimer: Timer!
     var totalTime = 11
@@ -58,6 +61,32 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
+    @IBAction func addButtonPressed(_ sender: UIButton) {
+        
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add New Action", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add", style: .default) { (action) in
+            
+            let newAction = Action()
+            newAction.name = textField.text!
+            newAction.duration = 10
+            
+            self.save(action: newAction)
+            
+        }
+        
+        alert.addAction(action)
+        
+        alert.addTextField { (field) in
+            textField = field
+            textField.placeholder = "Add a new action"
+        }
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -106,6 +135,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
         let synthesizer = AVSpeechSynthesizer()
         synthesizer.speak(utterance)
+    }
+    
+    func save(action: Action) {
+        //TODO: Create action in realm
     }
     
 }
