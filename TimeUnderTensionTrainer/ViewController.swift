@@ -24,10 +24,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     let listActions = ["Up","Pause","Down","Pause"]
     
-    class Action {
-        var name: String = ""
-        var duration: Int = 0
-    }
+//    class Action {
+//        var name: String = ""
+//        var duration: Int = 0
+//    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listActions.count
@@ -138,7 +138,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func save(action: Action) {
-        //TODO: Create action in realm
+        do {
+            try realm.write {
+                realm.add(action)
+            }
+        } catch {
+            print("Error saving action\(action)")
+        }
+        
+        
     }
     
 }
