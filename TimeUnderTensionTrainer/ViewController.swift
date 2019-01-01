@@ -14,6 +14,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     let realm = try! Realm()
     
+    var actionsList: Results<Action>?
+    
     var countdownTimer: Timer!
     var totalTime = 11
     var currentAction = ""
@@ -22,21 +24,32 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var currentActionIndex = 0
     var repCount = 0
     
-    let listActions = ["Up","Pause","Down","Pause"]
+//    let listActions = realm.objects(Action.self)
     
 //    class Action {
 //        var name: String = ""
 //        var duration: Int = 0
 //    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        loadActions()
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return listActions.count
+        return actionsList?.count ?? 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = listActions[indexPath.row]
+        cell.textLabel?.text = actionsList?[indexPath.row].name ?? "No Actions Added Yet"
         return cell
+    }
+    
+    func loadActions() {
+        actionsList = realm.objects(Action.self)
+        actionList.reloadData();
     }
 
     
@@ -86,9 +99,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         present(alert, animated: true, completion: nil)
         
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
     }
     
     func startTimer() {
@@ -146,7 +156,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             print("Error saving action\(action)")
         }
         
-        
+        print("Calling reload data from save")
+        actionList.reloadData()
     }
     
 }
