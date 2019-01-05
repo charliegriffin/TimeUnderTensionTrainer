@@ -47,6 +47,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
+    // UPDATE ACTION
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if let action = actionsList?[indexPath.row] {
+            do {
+                try realm.write {
+                    //action.name = "clicked"
+                    realm.delete(action)
+                }
+            } catch {
+                print("Error updating action, \(error)")
+            }
+        }
+        tableView.reloadData();
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     func loadActions() {
         actionsList = realm.objects(Action.self)
         actionList.reloadData();
@@ -76,26 +94,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBAction func addButtonPressed(_ sender: UIButton) {
         
-        var textField = UITextField()
+        let alert = UIAlertController(title: "Add New Action", message:"", preferredStyle: .alert)
         
-        let alert = UIAlertController(title: "Add New Action", message: "", preferredStyle: .alert)
+        alert.addTextField { (name) in
+            name.placeholder = "Add a new action"
+        }
+        
+        alert.addTextField(configurationHandler: { (duration) in
+            duration.keyboardType = .numberPad
+            duration.placeholder = "Enter Duration"
+        })
         
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
             
             let newAction = Action()
-            newAction.name = textField.text!
-            newAction.duration = 10
+            newAction.name = (alert.textFields?[0].text)!
+            newAction.duration = Int(alert.textFields?[1].text ?? "1")!
             
             self.save(action: newAction)
             
         }
         
         alert.addAction(action)
-        
-        alert.addTextField { (field) in
-            textField = field
-            textField.placeholder = "Add a new action"
-        }
         
         present(alert, animated: true, completion: nil)
         
