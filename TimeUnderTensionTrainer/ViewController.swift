@@ -24,6 +24,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var currentActionIndex = 0
     var repCount = 0
     
+    let actionList = UITableView()
+    
 //    let listActions = realm.objects(Action.self)
     
 //    class Action {
@@ -33,6 +35,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        actionList.frame = CGRect(x: 0, y: self.view.frame.height/3,
+                                  width: self.view.frame.width, height: self.view.frame.height/4)
+        actionList.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        actionList.dataSource = self
+        actionList.delegate = self
+        
+        view.addSubview(actionList)
         
         loadActions()
     }
@@ -67,12 +77,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func loadActions() {
         actionsList = realm.objects(Action.self)
-        actionList.reloadData();
+        //actionList.reloadData();
     }
 
-    
-
-    @IBOutlet weak var actionList: UITableView!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var repLabel: UILabel!
     @IBAction func startButtonPressed(_ sender: UIButton) {

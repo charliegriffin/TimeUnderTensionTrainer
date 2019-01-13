@@ -111,7 +111,6 @@
 				7A361B8C20BA23E4002A7231 /* Frameworks */,
 				7A361B8D20BA23E4002A7231 /* Resources */,
 				FDD2154BA5A0328A564BE79E /* [CP] Embed Pods Frameworks */,
-				24044E7D13FE173FED82515A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -170,21 +169,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		24044E7D13FE173FED82515A /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TimeUnderTensionTrainer/Pods-TimeUnderTensionTrainer-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		AFD1D61916DF32C331BDE203 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
