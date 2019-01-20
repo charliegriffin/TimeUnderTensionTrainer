@@ -66,19 +66,47 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // UPDATE ACTION
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        print("clicked")
-        
         if let action = actionsList?[indexPath.row] {
-            do {
-                try realm.write {
-                    //action.name = "clicked"
-                    realm.delete(action)
-                }
-            } catch {
-                print("Error updating action, \(error)")
+            
+            let alert = UIAlertController(title: "Edit Action", message:"", preferredStyle: .alert)
+            
+            alert.addTextField { (name) in
+                name.placeholder = "Action Name"
+                name.text = action.name
             }
+
+            alert.addTextField(configurationHandler: { (duration) in
+                duration.keyboardType = .numberPad
+                duration.placeholder = "Action Duration"
+                duration.text = String(action.duration)
+            })
+
+            // TODO: Refactor into update function
+            
+            let updateAlertAction = UIAlertAction(title: "Update", style: .default) { (updateAction) in
+
+                let newAction = Action()
+                newAction.name = (alert.textFields?[0].text)!
+                newAction.duration = Int(alert.textFields?[1].text ?? "1")!
+
+                do {
+                    try self.realm.write {
+                        action.name = newAction.name
+                        action.duration = newAction.duration
+                    }
+                } catch {
+                    print("Error updating action, \(error)")
+                }
+                
+                tableView.reloadData();
+
+            }
+
+            alert.addAction(updateAlertAction)
+
+            present(alert, animated: true, completion: nil)
+            
         }
-        tableView.reloadData();
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
