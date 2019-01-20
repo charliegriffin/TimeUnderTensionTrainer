@@ -14,6 +14,7 @@
 		7A361B9A20BA23E5002A7231 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A361B9920BA23E5002A7231 /* Assets.xcassets */; };
 		7A361B9D20BA23E5002A7231 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A361B9B20BA23E5002A7231 /* LaunchScreen.storyboard */; };
 		7A361BA620D9289B002A7231 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A361BA520D9289B002A7231 /* Action.swift */; };
+		7AE081FB21F4CF6A00401E79 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE081FA21F4CF6A00401E79 /* CustomCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		7A361B9C20BA23E5002A7231 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7A361B9E20BA23E5002A7231 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A361BA520D9289B002A7231 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		7AE081FA21F4CF6A00401E79 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		8C7023E9930A45DFBD1A97B5 /* Pods-TimeUnderTensionTrainer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeUnderTensionTrainer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TimeUnderTensionTrainer/Pods-TimeUnderTensionTrainer.debug.xcconfig"; sourceTree = "<group>"; };
 		BBCF360D9D68B308F3BF20DA /* Pods-TimeUnderTensionTrainer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeUnderTensionTrainer.release.xcconfig"; path = "Pods/Target Support Files/Pods-TimeUnderTensionTrainer/Pods-TimeUnderTensionTrainer.release.xcconfig"; sourceTree = "<group>"; };
 		BC6B5AB98A480F9B4567504A /* Pods_TimeUnderTensionTrainer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TimeUnderTensionTrainer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,6 +75,7 @@
 			children = (
 				7A361B9220BA23E4002A7231 /* AppDelegate.swift */,
 				7A361B9420BA23E4002A7231 /* ViewController.swift */,
+				7AE081FA21F4CF6A00401E79 /* CustomCell.swift */,
 				7A361B9620BA23E4002A7231 /* Main.storyboard */,
 				7A361B9920BA23E5002A7231 /* Assets.xcassets */,
 				7A361B9B20BA23E5002A7231 /* LaunchScreen.storyboard */,
@@ -216,6 +219,7 @@
 			files = (
 				7A361B9520BA23E4002A7231 /* ViewController.swift in Sources */,
 				7A361BA620D9289B002A7231 /* Action.swift in Sources */,
+				7AE081FB21F4CF6A00401E79 /* CustomCell.swift in Sources */,
 				7A361B9320BA23E4002A7231 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
