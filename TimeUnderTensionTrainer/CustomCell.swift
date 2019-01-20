@@ -16,8 +16,8 @@ class CustomCell: UITableViewCell {
     var actionView : UITextView = {
         var textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
-//        textView.font = UIFont(name: "Helvetica", size: 18)
         textView.font = UIFont.systemFont(ofSize: 18.0)
+        textView.isUserInteractionEnabled = false
         // TODO: left align with divider
         return textView
     }()
@@ -27,6 +27,7 @@ class CustomCell: UITableViewCell {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .right
         textView.font = UIFont.systemFont(ofSize: 18.0)
+        textView.isUserInteractionEnabled = false
         // TODO: add right padding
         return textView
     }()

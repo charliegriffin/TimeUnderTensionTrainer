@@ -66,6 +66,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // UPDATE ACTION
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        print("clicked")
+        
         if let action = actionsList?[indexPath.row] {
             do {
                 try realm.write {
