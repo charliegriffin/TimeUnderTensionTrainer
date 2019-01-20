@@ -38,10 +38,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         actionList.frame = CGRect(x: 0, y: self.view.frame.height/3,
                                   width: self.view.frame.width, height: self.view.frame.height/4)
-//        actionList.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+//        actionList.register(UITableViewCell.self, forCellReuseIdentifier: "Cell") // for default style
         actionList.register(CustomCell.self, forCellReuseIdentifier: "Cell")
         actionList.dataSource = self
         actionList.delegate = self
+    
+//        print(UITableViewCell.font)
         
         view.addSubview(actionList)
         
@@ -54,7 +56,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
-        //cell.textLabel?.text = actionsList?[indexPath.row].name ?? "No Actions Added Yet"
+//        cell.textLabel?.text = actionsList?[indexPath.row].name ?? "No Actions Added Yet"  // for default style
         cell.actionName = actionsList?[indexPath.row].name ?? "No Actions Added Yet"
         let duration = actionsList?[indexPath.row].duration ?? 0
         cell.duration = String(duration)

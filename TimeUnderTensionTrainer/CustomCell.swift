@@ -16,12 +16,18 @@ class CustomCell: UITableViewCell {
     var actionView : UITextView = {
         var textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
+//        textView.font = UIFont(name: "Helvetica", size: 18)
+        textView.font = UIFont.systemFont(ofSize: 18.0)
+        // TODO: left align with divider
         return textView
     }()
     
     var durationView : UITextView = {
         var textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.textAlignment = .right
+        textView.font = UIFont.systemFont(ofSize: 18.0)
+        // TODO: add right padding
         return textView
     }()
     
@@ -29,11 +35,11 @@ class CustomCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.addSubview(actionView)
         self.addSubview(durationView)
-        
+
         actionView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         actionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         actionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        actionView.widthAnchor.constraint(equalTo: self.heightAnchor).isActive = true
+        actionView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.8).isActive = true
         
         durationView.leftAnchor.constraint(equalTo: self.actionView.rightAnchor).isActive = true
         durationView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
