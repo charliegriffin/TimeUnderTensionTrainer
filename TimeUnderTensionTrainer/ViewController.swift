@@ -30,6 +30,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let actionList = UITableView()
     let addActionButton = UIButton(type: .contactAdd)
     let startTimerButton = UIButton(type: .system)
+    let repLabel = UILabel()
+    let timerLabel = UILabel()
     
 //    let listActions = realm.objects(Action.self)
     
@@ -51,7 +53,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //        print(UITableViewCell.font)
         
         addActionButton.frame = CGRect(x: self.view.frame.width*0.9, y: self.view.frame.height*0.95, width: 22, height: 22)
-        addActionButton.tintColor = .white
+        addActionButton.tintColor = .black
         addActionButton.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
         
         let startTextWidth = CGFloat(100);
@@ -60,12 +62,33 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         startTimerButton.frame = CGRect(x: (self.view.frame.width-startTextWidth)*0.5, y: self.view.frame.height*0.9, width: startTextWidth, height: startTextHeight)
         startTimerButton.setTitle("Start", for: .normal)
         startTimerButton.titleLabel?.font = UIFont(name: "Helvetica Neue", size: 40)
-        startTimerButton.setTitleColor(.white, for: .normal)
+        startTimerButton.setTitleColor(.black, for: .normal)
         startTimerButton.addTarget(self, action: #selector(startButtonPressed), for: .touchUpInside)
+        
+        let repLabelWidth = CGFloat(self.view.frame.width*0.9);
+        let repLabelHeight = CGFloat(100);
+        
+        repLabel.frame = CGRect(x: (self.view.frame.width-repLabelWidth)*0.5, y: self.view.frame.height*0.1, width: repLabelWidth, height: repLabelHeight)
+        repLabel.textAlignment = .center
+        repLabel.text = "Press Start"
+        repLabel.font = UIFont(name: "Helvetica Neue", size: 40)
+        //repLabel.textColor = .white
+        
+        let timerLabelWidth = CGFloat(self.view.frame.width*0.5);
+        let timerLabelHeight = CGFloat(100);
+        
+        timerLabel.frame = CGRect(x: (self.view.frame.width-timerLabelWidth)*0.5, y: self.view.frame.height*0.2, width: timerLabelWidth, height: timerLabelHeight)
+        timerLabel.textAlignment = .center
+        timerLabel.text = "0"
+        timerLabel.font = UIFont(name: "Helvetica Neue", size: 40)
+        //timerLabel.textColor = .white
+        
         
         view.addSubview(actionList)
         view.addSubview(addActionButton)
         view.addSubview(startTimerButton)
+        view.addSubview(repLabel)
+        view.addSubview(timerLabel)
         
         loadActions()
         
@@ -141,8 +164,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         //actionList.reloadData();
     }
 
-    @IBOutlet weak var timerLabel: UILabel!
-    @IBOutlet weak var repLabel: UILabel!
     @objc func startButtonPressed(_ sender: UIButton) {
         
         
