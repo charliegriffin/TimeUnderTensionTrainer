@@ -21,7 +21,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var totalTime = 11
     var currentAction = ""
     var currentActionDuration = 0
-    var actions = [Action]()
     var currentActionIndex = 0
     var repCount = 0
     
@@ -167,16 +166,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @objc func startButtonPressed(_ sender: UIButton) {
         
         
-        let firstAction = Action()
-        actions.append(firstAction)
-        firstAction.name = "Down"
-        firstAction.duration = 4
-        let secondAction = Action()
-        secondAction.name = "Up"
-        secondAction.duration = 2
-        actions.append(secondAction)
-        currentAction = firstAction.name
-        currentActionDuration = firstAction.duration
+//        let firstAction = Action()
+//        actions.append(firstAction)
+//        firstAction.name = "Down"
+//        firstAction.duration = 4
+//        let secondAction = Action()
+//        secondAction.name = "Up"
+//        secondAction.duration = 2
+//        actions.append(secondAction)
+        currentAction = actionsList?[0].name ?? ""
+        currentActionDuration = actionsList?[0].duration ?? 10
         startTimer()
         
     }
@@ -229,15 +228,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             totalTime -= 1
         } else {
             // Next Action
-            if(currentActionIndex < (actions.count - 1)){
+            if(currentActionIndex < ((actionsList?.count)! - 1)){
                 currentActionIndex += 1
             } else {
                 currentActionIndex = 0
                 repCount += 1
                 repLabel.text = "\(repCount)"
             }
-            currentAction = actions[currentActionIndex].name
-            currentActionDuration = actions[currentActionIndex].duration
+            currentAction = actionsList![currentActionIndex].name
+            currentActionDuration = actionsList![currentActionIndex].duration
             totalTime = currentActionDuration
             //endTimer()
         }
