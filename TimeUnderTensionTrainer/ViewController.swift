@@ -27,6 +27,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     let actionList = UITableView()
     
+    let addActionButton = UIButton(type: .contactAdd)
+    
 //    let listActions = realm.objects(Action.self)
     
 //    class Action {
@@ -46,7 +48,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
 //        print(UITableViewCell.font)
         
+        addActionButton.frame = CGRect(x: self.view.frame.width*0.9, y: self.view.frame.height*0.95, width: 22, height: 22)
+        addActionButton.tintColor = .white
+        addActionButton.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
+        
         view.addSubview(actionList)
+        view.addSubview(addActionButton)
         
         loadActions()
         
@@ -141,7 +148,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-    @IBAction func addButtonPressed(_ sender: UIButton) {
+    @objc func addButtonPressed(_ sender: UIButton) {
         
         let alert = UIAlertController(title: "Add New Action", message:"", preferredStyle: .alert)
         
