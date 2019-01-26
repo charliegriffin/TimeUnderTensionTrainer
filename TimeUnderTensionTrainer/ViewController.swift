@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import RealmSwift
+import SwipeCellKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -37,7 +38,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         
         actionList.frame = CGRect(x: 0, y: self.view.frame.height/3,
-                                  width: self.view.frame.width, height: self.view.frame.height/4)
+                                  width: self.view.frame.width, height: self.view.frame.height/3)
 //        actionList.register(UITableViewCell.self, forCellReuseIdentifier: "Cell") // for default style
         actionList.register(CustomCell.self, forCellReuseIdentifier: "Cell")
         actionList.dataSource = self
@@ -48,6 +49,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         view.addSubview(actionList)
         
         loadActions()
+        
+        actionList.rowHeight = 60.0
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -60,6 +63,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         cell.actionName = actionsList?[indexPath.row].name ?? "No Actions Added Yet"
         let duration = actionsList?[indexPath.row].duration ?? 0
         cell.duration = String(duration)
+        
+        cell.delegate = self
+        
         return cell
     }
     
@@ -223,5 +229,42 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         actionList.reloadData()
     }
     
+    func deleteAction(action: Action) {
+        do {
+            try realm.write {
+                realm.delete(action)
+            }
+        } catch {
+            print("Error deleting action\(action)")
+        }
+        //actionList.reloadData()
+    }
+    
 }
 
+//MARK: - Swipe Cell Delegate Methods
+
+// TODO: Refactor into super class
+
+extension ViewController: SwipeTableViewCellDelegate {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            if let actionToDelete = self.actionsList?[indexPath.row] {
+                self.deleteAction(action: actionToDelete)
+            }
+        }
+
+        // customize the action appearance
+        deleteAction.image = UIImage(named: "delete-icon")
+
+        return [deleteAction]
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        var options = SwipeOptions()
+        options.expansionStyle = .destructive
+        return options
+    }
+}

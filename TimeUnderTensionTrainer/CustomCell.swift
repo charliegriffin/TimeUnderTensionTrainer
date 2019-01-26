@@ -8,8 +8,9 @@
 
 import Foundation
 import UIKit
+import SwipeCellKit
 
-class CustomCell: UITableViewCell {
+class CustomCell: SwipeTableViewCell {
     var actionName : String?
     var duration : String?
     
