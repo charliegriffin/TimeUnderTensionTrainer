@@ -25,9 +25,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var currentActionIndex = 0
     var repCount = 0
     
-    let actionList = UITableView()
+    // MARK: Initalize UI Elements
     
+    let actionList = UITableView()
     let addActionButton = UIButton(type: .contactAdd)
+    let startTimerButton = UIButton(type: .system)
     
 //    let listActions = realm.objects(Action.self)
     
@@ -40,7 +42,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         
         actionList.frame = CGRect(x: 0, y: self.view.frame.height/3,
-                                  width: self.view.frame.width, height: self.view.frame.height/3)
+                                  width: self.view.frame.width, height: self.view.frame.height/2)
 //        actionList.register(UITableViewCell.self, forCellReuseIdentifier: "Cell") // for default style
         actionList.register(CustomCell.self, forCellReuseIdentifier: "Cell")
         actionList.dataSource = self
@@ -52,8 +54,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         addActionButton.tintColor = .white
         addActionButton.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
         
+        let startTextWidth = CGFloat(100);
+        let startTextHeight = CGFloat(100);
+        
+        startTimerButton.frame = CGRect(x: (self.view.frame.width-startTextWidth)*0.5, y: self.view.frame.height*0.9, width: startTextWidth, height: startTextHeight)
+        startTimerButton.setTitle("Start", for: .normal)
+        startTimerButton.titleLabel?.font = UIFont(name: "Helvetica Neue", size: 40)
+        startTimerButton.setTitleColor(.white, for: .normal)
+        startTimerButton.addTarget(self, action: #selector(startButtonPressed), for: .touchUpInside)
+        
         view.addSubview(actionList)
         view.addSubview(addActionButton)
+        view.addSubview(startTimerButton)
         
         loadActions()
         
@@ -131,7 +143,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var repLabel: UILabel!
-    @IBAction func startButtonPressed(_ sender: UIButton) {
+    @objc func startButtonPressed(_ sender: UIButton) {
         
         
         let firstAction = Action()
@@ -244,7 +256,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         } catch {
             print("Error deleting action\(action)")
         }
-        //actionList.reloadData()
+//        actionList.reloadData()
     }
     
 }
