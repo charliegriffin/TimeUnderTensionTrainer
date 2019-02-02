@@ -159,7 +159,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func loadActions() {
-        actionsList = realm.objects(Action.self)
+        actionsList = realm.objects(Action.self).sorted(byKeyPath: "index", ascending: true)
         //actionList.reloadData();
     }
 
@@ -198,6 +198,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             let newAction = Action()
             newAction.name = (alert.textFields?[0].text)!
             newAction.duration = Int(alert.textFields?[1].text ?? "1")!
+            newAction.index = (self.actionsList?.count ?? 0)
             
             self.save(action: newAction)
             
@@ -268,7 +269,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         actionList.reloadData()
     }
     
+    
+    
     func deleteAction(action: Action) {
+        // TODO: reindex on delete
+        
         do {
             try realm.write {
                 realm.delete(action)
@@ -290,6 +295,7 @@ extension ViewController: SwipeTableViewCellDelegate {
         guard orientation == .right else { return nil }
 
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            print(indexPath)
             if let actionToDelete = self.actionsList?[indexPath.row] {
                 self.deleteAction(action: actionToDelete)
             }

@@ -12,4 +12,5 @@ import RealmSwift
 class Action: Object {
     @objc dynamic var name: String = ""
     @objc dynamic var duration: Int = 0
+    @objc dynamic var index: Int = 0
 }
