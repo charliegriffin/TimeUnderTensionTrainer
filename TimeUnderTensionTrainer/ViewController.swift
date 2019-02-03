@@ -272,16 +272,33 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     func deleteAction(action: Action) {
-        // TODO: reindex on delete
-        
         do {
             try realm.write {
                 realm.delete(action)
             }
+            reindexActions()
         } catch {
             print("Error deleting action\(action)")
         }
 //        actionList.reloadData()
+    }
+    
+    func reindexActions() {
+        
+        for index in (actionsList?.indices)! {
+            guard let remainingAction = actionsList?[index] else {
+                print("Error finding action at position \(index) for reindexing")
+                return
+            }
+            // update index on action
+            do {
+                try self.realm.write {
+                    remainingAction.index = index
+                }
+            } catch {
+                print("Error reindexing actions, \(error)")
+            }
+        }
     }
     
 }
@@ -295,7 +312,6 @@ extension ViewController: SwipeTableViewCellDelegate {
         guard orientation == .right else { return nil }
 
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
-            print(indexPath)
             if let actionToDelete = self.actionsList?[indexPath.row] {
                 self.deleteAction(action: actionToDelete)
             }
