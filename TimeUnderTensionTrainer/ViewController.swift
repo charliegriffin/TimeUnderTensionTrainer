@@ -24,6 +24,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var currentActionIndex = 0
     var repCount = 0
     
+    // state variables
+    var timerRunning = false
+    
     // MARK: Initalize UI Elements
     
     let actionList = UITableView()
@@ -174,9 +177,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //        secondAction.name = "Up"
 //        secondAction.duration = 2
 //        actions.append(secondAction)
-        currentAction = actionsList?[0].name ?? ""
-        currentActionDuration = actionsList?[0].duration ?? 10
-        startTimer()
+        if(!timerRunning){
+            currentAction = actionsList?[0].name ?? ""
+            currentActionDuration = actionsList?[0].duration ?? 10
+            startTimer()
+            timerRunning = true;
+            startTimerButton.setTitle("Stop", for: .normal);
+        } else {
+            endTimer()
+            timerRunning = !timerRunning;
+            startTimerButton.setTitle("Start", for: .normal);
+        }
+        
         
     }
     
@@ -213,6 +225,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func startTimer() {
         print(currentAction)
         totalTime = currentActionDuration
+        repCount = 0
+        repLabel.text = "\(repCount)"
         countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
     }
     
