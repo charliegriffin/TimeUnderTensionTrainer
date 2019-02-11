@@ -135,20 +135,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             let updateAlertAction = UIAlertAction(title: "Update", style: .default) { (updateAction) in
 
-                let newAction = Action()
-                newAction.name = (alert.textFields?[0].text)!
-                newAction.duration = Int(alert.textFields?[1].text ?? "1")!
+                if(alert.textFields?[0].text! != ""){
+                    let newAction = Action()
+                    newAction.name = (alert.textFields?[0].text)!
+                    newAction.duration = alert.textFields?[1].text != "" ? Int(alert.textFields?[1].text ?? "1")! : 1
 
-                do {
-                    try self.realm.write {
-                        action.name = newAction.name
-                        action.duration = newAction.duration
+                    do {
+                        try self.realm.write {
+                            action.name = newAction.name
+                            action.duration = newAction.duration
+                        }
+                    } catch {
+                        print("Error updating action, \(error)")
                     }
-                } catch {
-                    print("Error updating action, \(error)")
+                    
+                    tableView.reloadData();
                 }
-                
-                tableView.reloadData();
 
             }
 
@@ -200,23 +202,41 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             name.placeholder = "Add a new action"
         }
         
-        alert.addTextField(configurationHandler: { (duration) in
-            duration.keyboardType = .numberPad
-            duration.placeholder = "Enter Duration"
-        })
+        
         
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
             
-            let newAction = Action()
-            newAction.name = (alert.textFields?[0].text)!
-            newAction.duration = Int(alert.textFields?[1].text ?? "1")!
-            newAction.index = (self.actionsList?.count ?? 0)
             
-            self.save(action: newAction)
+            if(alert.textFields?[0].text! != ""){
+                let newAction = Action()
+                newAction.name = (alert.textFields?[0].text)!
+                newAction.duration = alert.textFields?[1].text != "" ? Int(alert.textFields?[1].text ?? "1")! : 1
+                newAction.index = (self.actionsList?.count ?? 0)
+                self.save(action: newAction)
+            }
+            
             
         }
         
         alert.addAction(action)
+        
+        // TODO: Add validation to update
+        // TODO: Refactor stuff in here into a method
+        
+        alert.addTextField(configurationHandler: { (duration) in
+            duration.keyboardType = .numberPad
+            duration.placeholder = "Enter Duration"
+            duration.text = ""
+            action.isEnabled = false
+            let regex = try! NSRegularExpression(pattern: "^[0-9]*$", options: .caseInsensitive)
+            var isValidNum = false
+            
+            NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: duration, queue: OperationQueue.main) { (notification) in
+                isValidNum = regex.firstMatch(in: duration.text!, options: [], range: NSRange(location: 0, length: duration.text!.count)) != nil
+                isValidNum = isValidNum && duration.text!.count > 0
+                action.isEnabled = isValidNum
+            }
+        })
         
         present(alert, animated: true, completion: nil)
         
