@@ -273,47 +273,62 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @objc func updateTime() {
         
         // TODO: this is in desparate need of a refactor
-        
         timerLabel.text = "\(totalTime)"
-//        print("current action duration", currentActionDuration)
+        
+        if(currentAction == startAction){
+            readyCountdown()
+        } else {
+            countdown()
+        }
+    }
+    
+    func readyCountdown() {
+        if(totalTime == currentActionDuration){
+            speakCount(phrase: currentAction)
+        } else if (totalTime == 5){
+            speakCount(phrase: "Ready?")
+        } else if (totalTime < 4){
+            speakCount(phrase: String(totalTime))
+        }
+        
+        if totalTime > 1 {
+            totalTime -= 1
+        } else {
+            currentAction = "Begin"
+            currentActionDuration = 1
+            currentActionIndex = -1
+        }
+    }
+    
+    
+    // TODO: split into 2 function, read countdown and update countdown
+    func countdown() {
+        //        print("current action duration", currentActionDuration)
         if(totalTime == currentActionDuration){
             print("Speaking current action")
             speakCount(phrase: currentAction)
         } else if (totalTime != 0) {
-            if(currentAction != startAction){
-                speakCount(phrase: String(totalTime))
-            } else {
-                if(totalTime == 5){
-                    speakCount(phrase: "Ready?")
-                } else if (totalTime < 4){
-                    speakCount(phrase: String(totalTime))
-                }
-            }
+            speakCount(phrase: String(totalTime))
         }
         
         if totalTime > 1 {
             totalTime -= 1
         } else {
             // Next Action
-            if(currentAction == startAction){
-                currentAction = "Begin"
-                currentActionDuration = 1
-                currentActionIndex = -1
-            } else {
-                if(currentActionIndex < ((actionsList?.count)! - 1)){
+            if(currentActionIndex < ((actionsList?.count)! - 1)){
                 currentActionIndex += 1
-                } else {
-                    currentActionIndex = 0
-                    repCount += 1
-                    repLabel.text = "\(repCount)"
-                }
-                currentAction = actionsList![currentActionIndex].name
-                currentActionDuration = actionsList![currentActionIndex].duration
-                totalTime = currentActionDuration
+            } else {
+                currentActionIndex = 0
+                repCount += 1
+                repLabel.text = "\(repCount)"
             }
-            //endTimer()
+            currentAction = actionsList![currentActionIndex].name
+            currentActionDuration = actionsList![currentActionIndex].duration
+            totalTime = currentActionDuration
         }
+        //endTimer()
     }
+    
     
     func endTimer() {
         countdownTimer.invalidate()
