@@ -24,6 +24,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var currentActionIndex = 0
     var repCount = 0
     
+    let startAction = "Starting in 10 seconds"
+    let startActionDuration = 11
+    
     // state variables
     var timerRunning = false
     
@@ -183,8 +186,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //        secondAction.duration = 2
 //        actions.append(secondAction)
         if(!timerRunning){
-            currentAction = actionsList?[0].name ?? ""
-            currentActionDuration = actionsList?[0].duration ?? 10
+            // TODO: add time to get ready
+            //"Starting exercise in 10 seconds"
+            //"3, 2, 1 Begin"
+            
+            currentAction = startAction
+            currentActionDuration = startActionDuration
+            //            currentAction = actionsList?[0].name ?? ""
+//            currentActionDuration = actionsList?[0].duration ?? 10
             startTimer()
             timerRunning = true;
             startTimerButton.setTitle("Stop", for: .normal);
@@ -251,6 +260,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func startTimer() {
+        
+        
+        
         print(currentAction)
         totalTime = currentActionDuration
         repCount = 0
@@ -259,34 +271,53 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     @objc func updateTime() {
+        
+        // TODO: this is in desparate need of a refactor
+        
         timerLabel.text = "\(totalTime)"
+//        print("current action duration", currentActionDuration)
         if(totalTime == currentActionDuration){
             print("Speaking current action")
             speakCount(phrase: currentAction)
         } else if (totalTime != 0) {
-            speakCount(phrase: String(totalTime))
+            if(currentAction != startAction){
+                speakCount(phrase: String(totalTime))
+            } else {
+                if(totalTime == 5){
+                    speakCount(phrase: "Ready?")
+                } else if (totalTime < 4){
+                    speakCount(phrase: String(totalTime))
+                }
+            }
         }
         
         if totalTime > 1 {
             totalTime -= 1
         } else {
             // Next Action
-            if(currentActionIndex < ((actionsList?.count)! - 1)){
-                currentActionIndex += 1
+            if(currentAction == startAction){
+                currentAction = "Begin"
+                currentActionDuration = 1
+                currentActionIndex = -1
             } else {
-                currentActionIndex = 0
-                repCount += 1
-                repLabel.text = "\(repCount)"
+                if(currentActionIndex < ((actionsList?.count)! - 1)){
+                currentActionIndex += 1
+                } else {
+                    currentActionIndex = 0
+                    repCount += 1
+                    repLabel.text = "\(repCount)"
+                }
+                currentAction = actionsList![currentActionIndex].name
+                currentActionDuration = actionsList![currentActionIndex].duration
+                totalTime = currentActionDuration
             }
-            currentAction = actionsList![currentActionIndex].name
-            currentActionDuration = actionsList![currentActionIndex].duration
-            totalTime = currentActionDuration
             //endTimer()
         }
     }
     
     func endTimer() {
         countdownTimer.invalidate()
+        currentActionIndex = 0
     }
     
     func speakCount(phrase: String) {
