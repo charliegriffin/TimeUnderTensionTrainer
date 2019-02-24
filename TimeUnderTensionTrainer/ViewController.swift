@@ -125,12 +125,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 name.text = action.name
             }
 
-            alert.addTextField(configurationHandler: { (duration) in
-                duration.keyboardType = .numberPad
-                duration.placeholder = "Action Duration"
-                duration.text = String(action.duration)
-            })
-
             // TODO: Refactor into update function
             
             let updateAlertAction = UIAlertAction(title: "Update", style: .default) { (updateAction) in
@@ -153,8 +147,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 }
 
             }
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel)
 
             alert.addAction(updateAlertAction)
+            alert.addAction(cancel)
+            
+            alert.addTextField(configurationHandler: { (duration) in
+                duration.keyboardType = .numberPad
+                duration.placeholder = "Action Duration"
+                duration.text = String(action.duration)
+                self.validateNumInput(action: updateAlertAction, input: duration)
+            })
 
             present(alert, animated: true, completion: nil)
             
@@ -217,29 +220,34 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             
         }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
         
         alert.addAction(action)
-        
-        // TODO: Add validation to update
-        // TODO: Refactor stuff in here into a method
+        alert.addAction(cancel)
         
         alert.addTextField(configurationHandler: { (duration) in
             duration.keyboardType = .numberPad
             duration.placeholder = "Enter Duration"
             duration.text = ""
-            action.isEnabled = false
-            let regex = try! NSRegularExpression(pattern: "^[0-9]*$", options: .caseInsensitive)
-            var isValidNum = false
-            
-            NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: duration, queue: OperationQueue.main) { (notification) in
-                isValidNum = regex.firstMatch(in: duration.text!, options: [], range: NSRange(location: 0, length: duration.text!.count)) != nil
-                isValidNum = isValidNum && duration.text!.count > 0
-                action.isEnabled = isValidNum
-            }
+            self.validateNumInput(action: action, input: duration)
         })
         
         present(alert, animated: true, completion: nil)
         
+    }
+    
+    func validateNumInput(action: UIAlertAction, input: UITextField) {
+        action.isEnabled = false
+        let regex = try! NSRegularExpression(pattern: "^[0-9]*$", options: .caseInsensitive)
+
+        var isValidNum = input.text!.count > 0  // preserves edit behavior while starting false on add
+        action.isEnabled = isValidNum
+        
+        NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: input, queue: OperationQueue.main) { (notification) in
+            isValidNum = regex.firstMatch(in: input.text!, options: [], range: NSRange(location: 0, length: input.text!.count)) != nil
+            isValidNum = isValidNum && input.text!.count > 0
+            action.isEnabled = isValidNum
+        }
     }
     
     func startTimer() {
