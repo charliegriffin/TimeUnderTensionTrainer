@@ -65,7 +65,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let startTextWidth = CGFloat(100);
         let startTextHeight = CGFloat(100);
         
-        startTimerButton.frame = CGRect(x: (self.view.frame.width-startTextWidth)*0.5, y: self.view.frame.height*0.9, width: startTextWidth, height: startTextHeight)
+        startTimerButton.frame = CGRect(x: (self.view.frame.width-startTextWidth)*0.5, y: (self.view.frame.height-startTextHeight/2)*0.95, width: startTextWidth, height: startTextHeight)
         startTimerButton.setTitle("Start", for: .normal)
         startTimerButton.titleLabel?.font = UIFont(name: "Helvetica Neue", size: 40)
         startTimerButton.setTitleColor(.black, for: .normal)
@@ -74,20 +74,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let repLabelWidth = CGFloat(self.view.frame.width*0.9);
         let repLabelHeight = CGFloat(100);
         
-        repLabel.frame = CGRect(x: (self.view.frame.width-repLabelWidth)*0.5, y: self.view.frame.height*0.05, width: repLabelWidth, height: repLabelHeight)
+        repLabel.frame = CGRect(x: (self.view.frame.width-repLabelWidth)*0.5, y: 0, width: repLabelWidth, height: repLabelHeight)
         repLabel.textAlignment = .center
         repLabel.text = "Reps: 0"
         repLabel.font = UIFont(name: "Helvetica Neue", size: 30)
         //repLabel.textColor = .white
         
-        let timerLabelWidth = CGFloat(self.view.frame.width*0.5);
+        let timerLabelWidth = CGFloat(self.view.frame.width);
         let timerLabelHeight = CGFloat(100);
+        let timerFontSize = self.view.frame.width/4
         
-        timerLabel.frame = CGRect(x: (self.view.frame.width-timerLabelWidth)*0.5, y: self.view.frame.height*0.15, width: timerLabelWidth, height: timerLabelHeight)
+        timerLabel.frame = CGRect(x: (self.view.frame.width-timerLabelWidth)*0.5, y: self.view.frame.height*0.125, width: timerLabelWidth, height: timerLabelHeight)
         timerLabel.textAlignment = .center
         timerLabel.text = "00:00"
-        timerLabel.font = UIFont(name: "Helvetica Neue", size: 80)
-        //timerLabel.textColor = .white
+        timerLabel.font = UIFont(name: "Helvetica Neue", size: timerFontSize)
         
         let currentActionLabelWidth = CGFloat(self.view.frame.width*0.9);
         let currentActionLabelHeight = CGFloat(100);
@@ -137,8 +137,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 name.placeholder = "Action Name"
                 name.text = action.name
             }
-
-            // TODO: Refactor into update function
             
             let updateAlertAction = UIAlertAction(title: "Update", style: .default) { (updateAction) in
 
@@ -147,15 +145,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     newAction.name = (alert.textFields?[0].text)!
                     newAction.duration = alert.textFields?[1].text != "" ? Int(alert.textFields?[1].text ?? "1")! : 1
 
-                    do {
-                        try self.realm.write {
-                            action.name = newAction.name
-                            action.duration = newAction.duration
-                        }
-                    } catch {
-                        print("Error updating action, \(error)")
-                    }
-                    
+                    self.updateSavedAction(oldAction: action, newAction: newAction)
                     tableView.reloadData();
                 }
 
@@ -183,6 +173,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         actionsList = realm.objects(Action.self).sorted(byKeyPath: "index", ascending: true)
         //actionList.reloadData();
     }
+    
+    func updateSavedAction(oldAction: Action, newAction: Action) {
+        do {
+            try self.realm.write {
+                oldAction.name = newAction.name
+                oldAction.duration = newAction.duration
+            }
+        } catch {
+            print("Error updating action, \(error)")
+        }
+    }
 
     @objc func startButtonPressed(_ sender: UIButton) {
         
@@ -196,9 +197,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //        secondAction.duration = 2
 //        actions.append(secondAction)
         if(!timerRunning){
-            // TODO: add time to get ready
-            //"Starting exercise in 10 seconds"
-            //"3, 2, 1 Begin"
             
             currentAction = startAction
             currentActionDuration = startActionDuration
@@ -284,7 +282,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @objc func updateTime() {
         
-        // TODO: this is in desparate need of a refactor
         let minutes = totalTime / 60
         let seconds = totalTime % 60
 
@@ -315,19 +312,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    
-    // TODO: split into 2 function, read countdown and update countdown
     func countdown() {
-        //        print("current action duration", currentActionDuration)
+        readCountdown()
+        updateCountdown()
+    }
+    
+    func readCountdown() {
         if(totalTime == currentActionDuration){
-            print("Speaking current action")
             speakCount(phrase: currentAction)
             currentActionLabel.text = currentAction
             repLabel.text = "Reps: \(repCount)"
         } else if (totalTime != 0) {
             speakCount(phrase: String(totalTime))
         }
-        
+    }
+    
+    func updateCountdown() {
         if totalTime > 1 {
             totalTime -= 1
         } else {
@@ -342,9 +342,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             currentActionDuration = actionsList![currentActionIndex].duration
             totalTime = currentActionDuration
         }
-        //endTimer()
     }
-    
     
     func endTimer() {
         countdownTimer.invalidate()
