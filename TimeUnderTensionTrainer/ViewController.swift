@@ -109,7 +109,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         loadActions()
         
-        actionList.rowHeight = 60.0
+        let rowHeight = (self.view.frame.height + 570) / 18
+        actionList.rowHeight = rowHeight
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -427,7 +428,9 @@ extension ViewController: SwipeTableViewCellDelegate {
         }
 
         // customize the action appearance
-        deleteAction.image = UIImage(named: "delete-icon")
+        let iconScale = 0.0007*(self.view.frame.height + 570)
+        let deleteIcon = resizeImage(image: UIImage(named: "delete-icon")!, scale: iconScale)
+        deleteAction.image = deleteIcon//UIImage(named: "delete-icon")
 
         return [deleteAction]
     }
@@ -437,4 +440,17 @@ extension ViewController: SwipeTableViewCellDelegate {
         options.expansionStyle = .destructive
         return options
     }
+}
+
+func resizeImage(image: UIImage, scale: CGFloat) -> UIImage {
+    
+    let newHeight = image.size.height * scale
+    let newWidth = image.size.width * scale
+    UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
+    image.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
+    
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    
+    return newImage!
 }

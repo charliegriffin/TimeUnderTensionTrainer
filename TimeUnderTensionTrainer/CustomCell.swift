@@ -14,53 +14,89 @@ class CustomCell: SwipeTableViewCell {
     var actionName : String?
     var duration : String?
     
-    var actionView : UITextView = {
-        var textView = UITextView()
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.font = UIFont.systemFont(ofSize: 18.0)
-        textView.isUserInteractionEnabled = false
-        // TODO: left align with divider
-        return textView
+    var actionLabel : LeftPaddingLabel = {
+        let label = LeftPaddingLabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 24.0)
+        label.isUserInteractionEnabled = false
+        return label
     }()
     
-    var durationView : UITextView = {
-        var textView = UITextView()
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.textAlignment = .right
-        textView.font = UIFont.systemFont(ofSize: 18.0)
-        textView.isUserInteractionEnabled = false
-        // TODO: add right padding
-        return textView
+    var durationLabel : RightPaddingLabel = {
+        let label = RightPaddingLabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .right
+        label.font = UIFont.systemFont(ofSize: 24.0)
+        label.isUserInteractionEnabled = false
+        return label
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.addSubview(actionView)
-        self.addSubview(durationView)
+        self.addSubview(actionLabel)
+        self.addSubview(durationLabel)
 
-        actionView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        actionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        actionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        actionView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.8).isActive = true
+        actionLabel.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        actionLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        actionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        actionLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.8).isActive = true
         
-        durationView.leftAnchor.constraint(equalTo: self.actionView.rightAnchor).isActive = true
-        durationView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        durationView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        durationView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        durationLabel.leftAnchor.constraint(equalTo: self.actionLabel.rightAnchor).isActive = true
+        durationLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        durationLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        durationLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         if let actionName = actionName {
-            actionView.text = actionName
+            actionLabel.text = actionName
         }
         
         if let duration = duration {
-            durationView.text = duration
+            durationLabel.text = duration
         }
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+@IBDesignable class LeftPaddingLabel: UILabel {
+    
+    @IBInspectable var topInset: CGFloat = 0
+    @IBInspectable var bottomInset: CGFloat = 0
+    @IBInspectable var leftInset: CGFloat = 20
+    @IBInspectable var rightInset: CGFloat = 0
+    
+    override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets.init(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+        super.drawText(in: rect.inset(by: insets))
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        let size = super.intrinsicContentSize
+        return CGSize(width: size.width + leftInset + rightInset,
+                      height: size.height + topInset + bottomInset)
+    }
+}
+
+@IBDesignable class RightPaddingLabel: UILabel {
+    
+    @IBInspectable var topInset: CGFloat = 0
+    @IBInspectable var bottomInset: CGFloat = 0
+    @IBInspectable var leftInset: CGFloat = 0
+    @IBInspectable var rightInset: CGFloat = 10
+    
+    override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets.init(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+        super.drawText(in: rect.inset(by: insets))
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        let size = super.intrinsicContentSize
+        return CGSize(width: size.width + leftInset + rightInset,
+                      height: size.height + topInset + bottomInset)
     }
 }
