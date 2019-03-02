@@ -55,8 +55,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         actionList.register(CustomCell.self, forCellReuseIdentifier: "Cell")
         actionList.dataSource = self
         actionList.delegate = self
-    
-//        print(UITableViewCell.font)
         
         addActionButton.frame = CGRect(x: self.view.frame.width*0.9, y: self.view.frame.height*0.95, width: 22, height: 22)
         addActionButton.tintColor = .black
@@ -70,6 +68,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         startTimerButton.titleLabel?.font = UIFont(name: "Helvetica Neue", size: 40)
         startTimerButton.setTitleColor(.black, for: .normal)
         startTimerButton.addTarget(self, action: #selector(startButtonPressed), for: .touchUpInside)
+        //startTimerButton.isEnabled = !(!actionsList.count)
         
         let timerLabelWidth = CGFloat(self.view.frame.width);
         let timerLabelHeight = CGFloat(100);
@@ -94,8 +93,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let currentActionLabelWidth = CGFloat(self.view.frame.width*0.9);
         let currentActionLabelHeight = CGFloat(100);
         let currentActionFontSize = 0.3*timerFontSize;
-        
-        print(self.view.frame.height)
         
         currentActionLabel.frame = CGRect(x: (self.view.frame.width-currentActionLabelWidth)*0.5, y: self.view.frame.height*0.15 + timerPadding, width: currentActionLabelWidth, height: currentActionLabelHeight)
         currentActionLabel.textAlignment = .center
@@ -203,6 +200,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //        actions.append(secondAction)
         if(!timerRunning){
             
+            if(actionsList?.count ?? 0 < 1){
+                let alert = UIAlertController(title: "No Actions Added Yet", message:"Add Actions Using the + Button", preferredStyle: .alert)
+                let cancel = UIAlertAction(title: "Ok", style: .default)
+                alert.addAction(cancel)
+                present(alert, animated: true, completion: nil)
+                return
+            }
+            
             currentAction = startAction
             currentActionDuration = startActionDuration
             //            currentAction = actionsList?[0].name ?? ""
@@ -276,9 +281,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func startTimer() {
         
-        
-        
-        print(currentAction)
         totalTime = currentActionDuration
         repCount = 0
         repLabel.text = "Reps: \(repCount)"
