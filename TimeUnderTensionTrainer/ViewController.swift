@@ -49,7 +49,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        actionList.frame = CGRect(x: 0, y: self.view.frame.height/3,
+        actionList.frame = CGRect(x: 0, y: self.view.frame.height*0.4,
                                   width: self.view.frame.width, height: self.view.frame.height/2)
 //        actionList.register(UITableViewCell.self, forCellReuseIdentifier: "Cell") // for default style
         actionList.register(CustomCell.self, forCellReuseIdentifier: "Cell")
@@ -71,31 +71,36 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         startTimerButton.setTitleColor(.black, for: .normal)
         startTimerButton.addTarget(self, action: #selector(startButtonPressed), for: .touchUpInside)
         
-        let repLabelWidth = CGFloat(self.view.frame.width*0.9);
-        let repLabelHeight = CGFloat(100);
-        
-        repLabel.frame = CGRect(x: (self.view.frame.width-repLabelWidth)*0.5, y: 0, width: repLabelWidth, height: repLabelHeight)
-        repLabel.textAlignment = .center
-        repLabel.text = "Reps: 0"
-        repLabel.font = UIFont(name: "Helvetica Neue", size: 30)
-        //repLabel.textColor = .white
-        
         let timerLabelWidth = CGFloat(self.view.frame.width);
         let timerLabelHeight = CGFloat(100);
-        let timerFontSize = self.view.frame.width/4
+        let timerFontSize = self.view.frame.width/3.5
+        let timerPadding = (90 + 0.1*self.view.frame.height)/2
         
-        timerLabel.frame = CGRect(x: (self.view.frame.width-timerLabelWidth)*0.5, y: self.view.frame.height*0.125, width: timerLabelWidth, height: timerLabelHeight)
+        timerLabel.frame = CGRect(x: (self.view.frame.width-timerLabelWidth)*0.5, y: self.view.frame.height*0.15, width: timerLabelWidth, height: timerLabelHeight)
         timerLabel.textAlignment = .center
         timerLabel.text = "00:00"
         timerLabel.font = UIFont(name: "Helvetica Neue", size: timerFontSize)
         
+        let repLabelWidth = CGFloat(self.view.frame.width*0.9);
+        let repLabelHeight = CGFloat(100);
+        let repLabelFontSize = 0.3*timerFontSize
+        
+        repLabel.frame = CGRect(x: (self.view.frame.width-repLabelWidth)*0.5, y: self.view.frame.height*0.15 - timerPadding, width: repLabelWidth, height: repLabelHeight)
+        repLabel.textAlignment = .center
+        repLabel.text = "Reps: 0"
+        repLabel.font = UIFont(name: "Helvetica Neue", size: repLabelFontSize)
+        //repLabel.textColor = .white
+        
         let currentActionLabelWidth = CGFloat(self.view.frame.width*0.9);
         let currentActionLabelHeight = CGFloat(100);
+        let currentActionFontSize = 0.3*timerFontSize;
         
-        currentActionLabel.frame = CGRect(x: (self.view.frame.width-currentActionLabelWidth)*0.5, y: self.view.frame.height*0.25, width: currentActionLabelWidth, height: currentActionLabelHeight)
+        print(self.view.frame.height)
+        
+        currentActionLabel.frame = CGRect(x: (self.view.frame.width-currentActionLabelWidth)*0.5, y: self.view.frame.height*0.15 + timerPadding, width: currentActionLabelWidth, height: currentActionLabelHeight)
         currentActionLabel.textAlignment = .center
         currentActionLabel.text = "Press Start"
-        currentActionLabel.font = UIFont(name: "Helvetica Neue", size: 30)
+        currentActionLabel.font = UIFont(name: "Helvetica Neue", size: currentActionFontSize)
         
         
         view.addSubview(actionList)
