@@ -37,6 +37,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let startTimerButton = UIButton(type: .system)
     let repLabel = UILabel()
     let timerLabel = UILabel()
+    let currentActionLabel = UILabel()
     
 //    let listActions = realm.objects(Action.self)
     
@@ -73,20 +74,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let repLabelWidth = CGFloat(self.view.frame.width*0.9);
         let repLabelHeight = CGFloat(100);
         
-        repLabel.frame = CGRect(x: (self.view.frame.width-repLabelWidth)*0.5, y: self.view.frame.height*0.1, width: repLabelWidth, height: repLabelHeight)
+        repLabel.frame = CGRect(x: (self.view.frame.width-repLabelWidth)*0.5, y: self.view.frame.height*0.05, width: repLabelWidth, height: repLabelHeight)
         repLabel.textAlignment = .center
-        repLabel.text = "Press Start"
-        repLabel.font = UIFont(name: "Helvetica Neue", size: 40)
+        repLabel.text = "Reps: 0"
+        repLabel.font = UIFont(name: "Helvetica Neue", size: 30)
         //repLabel.textColor = .white
         
         let timerLabelWidth = CGFloat(self.view.frame.width*0.5);
         let timerLabelHeight = CGFloat(100);
         
-        timerLabel.frame = CGRect(x: (self.view.frame.width-timerLabelWidth)*0.5, y: self.view.frame.height*0.2, width: timerLabelWidth, height: timerLabelHeight)
+        timerLabel.frame = CGRect(x: (self.view.frame.width-timerLabelWidth)*0.5, y: self.view.frame.height*0.15, width: timerLabelWidth, height: timerLabelHeight)
         timerLabel.textAlignment = .center
-        timerLabel.text = "0"
-        timerLabel.font = UIFont(name: "Helvetica Neue", size: 40)
+        timerLabel.text = "00:00"
+        timerLabel.font = UIFont(name: "Helvetica Neue", size: 80)
         //timerLabel.textColor = .white
+        
+        let currentActionLabelWidth = CGFloat(self.view.frame.width*0.9);
+        let currentActionLabelHeight = CGFloat(100);
+        
+        currentActionLabel.frame = CGRect(x: (self.view.frame.width-currentActionLabelWidth)*0.5, y: self.view.frame.height*0.25, width: currentActionLabelWidth, height: currentActionLabelHeight)
+        currentActionLabel.textAlignment = .center
+        currentActionLabel.text = "Press Start"
+        currentActionLabel.font = UIFont(name: "Helvetica Neue", size: 30)
         
         
         view.addSubview(actionList)
@@ -94,6 +103,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         view.addSubview(startTimerButton)
         view.addSubview(repLabel)
         view.addSubview(timerLabel)
+        view.addSubview(currentActionLabel)
         
         loadActions()
         
@@ -197,10 +207,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             startTimer()
             timerRunning = true;
             startTimerButton.setTitle("Stop", for: .normal);
+            currentActionLabel.text = "Get Set"
         } else {
             endTimer()
             timerRunning = !timerRunning;
             startTimerButton.setTitle("Start", for: .normal);
+            currentActionLabel.text = "Press Start"
         }
         
         
@@ -266,14 +278,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         print(currentAction)
         totalTime = currentActionDuration
         repCount = 0
-        repLabel.text = "\(repCount)"
+        repLabel.text = "Reps: \(repCount)"
         countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
     }
     
     @objc func updateTime() {
         
         // TODO: this is in desparate need of a refactor
-        timerLabel.text = "\(totalTime)"
+        let minutes = totalTime / 60
+        let seconds = totalTime % 60
+
+        timerLabel.text = String(format: "%02d:%02d", minutes, seconds)
         
         if(currentAction == startAction){
             readyCountdown()
@@ -307,6 +322,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if(totalTime == currentActionDuration){
             print("Speaking current action")
             speakCount(phrase: currentAction)
+            currentActionLabel.text = currentAction
+            repLabel.text = "Reps: \(repCount)"
         } else if (totalTime != 0) {
             speakCount(phrase: String(totalTime))
         }
@@ -320,7 +337,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             } else {
                 currentActionIndex = 0
                 repCount += 1
-                repLabel.text = "\(repCount)"
             }
             currentAction = actionsList![currentActionIndex].name
             currentActionDuration = actionsList![currentActionIndex].duration
