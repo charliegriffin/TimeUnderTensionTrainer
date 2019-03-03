@@ -134,12 +134,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if let action = actionsList?[indexPath.row] {
             
+            print(action.name, action.duration)
+            
             let alert = UIAlertController(title: "Edit Action", message:"", preferredStyle: .alert)
             
-            alert.addTextField { (name) in
-                name.placeholder = "Action Name"
-                name.text = action.name
-            }
+//            alert.addTextField { (name) in
+//                name.placeholder = "Action Name"
+//                name.text = action.name
+//            }
             
             let updateAlertAction = UIAlertAction(title: "Update", style: .default) { (updateAction) in
 
@@ -147,7 +149,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     let newAction = Action()
                     newAction.name = (alert.textFields?[0].text)!
                     newAction.duration = alert.textFields?[1].text != "" ? Int(alert.textFields?[1].text ?? "1")! : 1
-
+                    
+                    
                     self.updateSavedAction(oldAction: action, newAction: newAction)
                     tableView.reloadData();
                 }
@@ -158,12 +161,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             alert.addAction(updateAlertAction)
             alert.addAction(cancel)
             
+            alert.addTextField { (name) in
+                name.placeholder = "Action Name"
+                name.text = action.name
+                self.validateUpdate(action: updateAlertAction,
+                                    nameInput: name,
+                                    initialValue: action.name,
+                                    initialDurationValue: String(action.duration),
+                                    alert: alert)
+            }
+            
+            
+            
             alert.addTextField(configurationHandler: { (duration) in
                 duration.keyboardType = .numberPad
                 duration.placeholder = "Action Duration"
                 duration.text = String(action.duration)
                 self.validateNumInput(action: updateAlertAction, input: duration)
             })
+            
+            
 
             present(alert, animated: true, completion: nil)
             
@@ -171,6 +188,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
     
     func loadActions() {
         actionsList = realm.objects(Action.self).sorted(byKeyPath: "index", ascending: true)
@@ -278,7 +296,47 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             isValidNum = isValidNum && input.text!.count > 0
             action.isEnabled = isValidNum
         }
+        
+        print("validate num input updating action state")
     }
+    
+    // TODO: refactor into arrays and iterate through them
+    // TODO: abstract so this works on both fields
+    func validateUpdate(action: UIAlertAction, nameInput: UITextField,
+                        initialValue: String, initialDurationValue: String, alert: UIAlertController) {
+        
+        var isUpdateValid = false  // preserves edit behavior while starting false on add
+        action.isEnabled = isUpdateValid
+
+        NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: nameInput, queue: OperationQueue.main) { (notification) in
+            if let durationValue = alert.textFields?[1].text {
+                isUpdateValid = self.isValidUpdate(initialVals: [initialValue, initialDurationValue],
+                                               currentVals: [nameInput.text!, durationValue])
+            } else {
+                print("ERROR: duration value is missing")
+            }
+            
+            print("validate update updating action state")
+            action.isEnabled = isUpdateValid
+        }
+
+    }
+    
+    
+    func isValidUpdate(initialVals: [String], currentVals: [String], numValIdx: Int = 1) -> Bool {
+        let regex = try! NSRegularExpression(pattern: "^[0-9]*$", options: .caseInsensitive)
+        
+        var isUpdated = false
+        for i in 0..<initialVals.count {
+            isUpdated = isUpdated || currentVals[i] != initialVals[i]
+        }
+        
+        var isValidNum = regex.firstMatch(in: currentVals[numValIdx], options: [], range: NSRange(location: 0, length: currentVals[numValIdx].count)) != nil
+        isValidNum = isValidNum && currentVals[numValIdx].count > 0
+        
+        return isUpdated && isValidNum
+    }
+    
     
     func startTimer() {
         
