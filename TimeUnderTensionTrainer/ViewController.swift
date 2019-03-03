@@ -58,7 +58,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         actionList.dataSource = self
         actionList.delegate = self
         
-        addActionButton.frame = CGRect(x: self.view.frame.width*0.9, y: self.view.frame.height*0.95, width: 22, height: 22)
+        addActionButton.frame = CGRect(x: self.view.frame.width*0.9, y: (self.view.frame.height-8)*0.95, width: 22, height: 22)
         addActionButton.tintColor = defaultTextColor
         addActionButton.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
         
