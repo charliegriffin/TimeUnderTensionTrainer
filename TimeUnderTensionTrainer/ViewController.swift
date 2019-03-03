@@ -164,20 +164,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             alert.addTextField { (name) in
                 name.placeholder = "Action Name"
                 name.text = action.name
-                self.validateUpdate(action: updateAlertAction,
-                                    nameInput: name,
-                                    initialValue: action.name,
-                                    initialDurationValue: String(action.duration),
+                self.validateUpdate(action: updateAlertAction, inputField: name,
+                                    inputFieldIdx: 0, initialValues: [action.name,String(action.duration)],
                                     alert: alert)
             }
-            
-            
             
             alert.addTextField(configurationHandler: { (duration) in
                 duration.keyboardType = .numberPad
                 duration.placeholder = "Action Duration"
                 duration.text = String(action.duration)
-                self.validateNumInput(action: updateAlertAction, input: duration)
+                self.validateUpdate(action: updateAlertAction, inputField: duration,
+                                    inputFieldIdx: 1, initialValues: [action.name,String(action.duration)],
+                                    alert: alert)
             })
             
             
@@ -208,15 +206,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     @objc func startButtonPressed(_ sender: UIButton) {
         
-        
-//        let firstAction = Action()
-//        actions.append(firstAction)
-//        firstAction.name = "Down"
-//        firstAction.duration = 4
-//        let secondAction = Action()
-//        secondAction.name = "Up"
-//        secondAction.duration = 2
-//        actions.append(secondAction)
         if(!timerRunning){
             
             if(actionsList?.count ?? 0 < 1){
@@ -300,23 +289,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         print("validate num input updating action state")
     }
     
-    // TODO: refactor into arrays and iterate through them
-    // TODO: abstract so this works on both fields
-    func validateUpdate(action: UIAlertAction, nameInput: UITextField,
-                        initialValue: String, initialDurationValue: String, alert: UIAlertController) {
+    
+    func validateUpdate(action: UIAlertAction, inputField: UITextField, inputFieldIdx: Int,
+                        initialValues: [String], alert: UIAlertController) {
         
         var isUpdateValid = false  // preserves edit behavior while starting false on add
         action.isEnabled = isUpdateValid
+        
+        let otherIdx = inputFieldIdx == 0 ? 1 : 0;
 
-        NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: nameInput, queue: OperationQueue.main) { (notification) in
-            if let durationValue = alert.textFields?[1].text {
-                isUpdateValid = self.isValidUpdate(initialVals: [initialValue, initialDurationValue],
-                                               currentVals: [nameInput.text!, durationValue])
+        NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: inputField, queue: OperationQueue.main) { (notification) in
+            if let otherValue = alert.textFields?[otherIdx].text {
+                var vals = ["",""]
+                
+                vals[otherIdx] = otherValue;
+                vals[inputFieldIdx] = inputField.text!
+                
+                isUpdateValid = self.isValidUpdate(initialVals: initialValues,
+                                               currentVals: vals)
             } else {
                 print("ERROR: duration value is missing")
             }
             
-            print("validate update updating action state")
             action.isEnabled = isUpdateValid
         }
 
