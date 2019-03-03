@@ -42,14 +42,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let currentActionLabel = UILabel()
     let backgroundColor = UIColor.flatBlack
     let defaultTextColor = UIColor(contrastingBlackOrWhiteColorOn: UIColor.flatBlack, isFlat: true)
+    let directiveTextColor = UIColor.flatGreen.lighten(byPercentage: 0.20)
+    let secondaryTextColor = UIColor.flatPowderBlue.lighten(byPercentage: 0.2)
     
-    
-//    let listActions = realm.objects(Action.self)
-    
-//    class Action {
-//        var name: String = ""
-//        var duration: Int = 0
-//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,8 +70,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         startTimerButton.titleLabel?.font = UIFont(name: "Helvetica Neue", size: 40)
         startTimerButton.setTitleColor(defaultTextColor, for: .normal)
         startTimerButton.addTarget(self, action: #selector(startButtonPressed), for: .touchUpInside)
-        //startTimerButton.titleLabel?.textColor = UIColor(contrastingBlackOrWhiteColorOn: backgroundColor, isFlat: true)
-        //startTimerButton.isEnabled = !(!actionsList.count)
         
         let timerLabelWidth = CGFloat(self.view.frame.width);
         let timerLabelHeight = CGFloat(100);
@@ -87,7 +80,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         timerLabel.textAlignment = .center
         timerLabel.text = "00:00"
         timerLabel.font = UIFont(name: "Helvetica Neue", size: timerFontSize)
-//        timerLabel.textColor = UIColor.flatYellow //UIColor(contrastingBlackOrWhiteColorOn: FlatBlack(), isFlat: true)
         timerLabel.textColor = defaultTextColor
         
         let repLabelWidth = CGFloat(self.view.frame.width*0.9);
@@ -98,9 +90,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         repLabel.textAlignment = .center
         repLabel.text = "Reps: 0"
         repLabel.font = UIFont(name: "Helvetica Neue", size: repLabelFontSize)
-        //repLabel.textColor = .white
-//        repLabel.textColor = UIColor.flatGreen //UIColor(contrastingBlackOrWhiteColorOn: FlatBlack(), isFlat: true)
-        repLabel.textColor = defaultTextColor
+        repLabel.textColor = secondaryTextColor
         
         let currentActionLabelWidth = CGFloat(self.view.frame.width*0.9);
         let currentActionLabelHeight = CGFloat(100);
@@ -110,8 +100,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         currentActionLabel.textAlignment = .center
         currentActionLabel.text = "Press Start"
         currentActionLabel.font = UIFont(name: "Helvetica Neue", size: currentActionFontSize)
-//        currentActionLabel.textColor = UIColor.flatWatermelon //UIColor(contrastingBlackOrWhiteColorOn: FlatBlack(), isFlat: true)
-        currentActionLabel.textColor = defaultTextColor
+        currentActionLabel.textColor = directiveTextColor
         
         view.addSubview(actionList)
         view.addSubview(addActionButton)
@@ -137,8 +126,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         cell.actionName = actionsList?[indexPath.row].name ?? "No Actions Added Yet"
         let duration = actionsList?[indexPath.row].duration ?? 0
         cell.duration = String(duration)
-        cell.actionLabel.textColor = defaultTextColor
-        cell.durationLabel.textColor = defaultTextColor
+        cell.actionLabel.textColor = secondaryTextColor
+        cell.durationLabel.textColor = secondaryTextColor
         cell.delegate = self
         
         cell.backgroundColor = backgroundColor.lighten(byPercentage: 0.05)
