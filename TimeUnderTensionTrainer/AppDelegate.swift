@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,7 +26,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Error initalising new realm, \(error)")
         }
         
-        
+        let session = AVAudioSession.sharedInstance()
+        do {
+            try session.setCategory(.playback, mode: .default)//session.setCategory(AVAudioSession.Category.playback)//Category(AVAudioSession.Category.playback)
+            try session.setActive(true)
+        } catch {
+            print("Error: \(error.localizedDescription)")
+        }
+
         
         return true
     }
