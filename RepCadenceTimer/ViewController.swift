@@ -11,6 +11,7 @@ import AVFoundation
 import RealmSwift
 import SwipeCellKit
 import ChameleonFramework
+import MediaPlayer
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -48,6 +49,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(FlatPowderBlueDark().hexValue())
+        
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        let commandCenter = MPRemoteCommandCenter.shared()
+
+        commandCenter.togglePlayPauseCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
+            print("pause command pressed")
+            return .success
+        }
+
+        commandCenter.playCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
+            print("play command pressed")
+            return .success
+        }
+
         
         view.backgroundColor = backgroundColor
         
@@ -114,6 +131,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let rowHeight = (self.view.frame.height + 570) / 18
         actionList.rowHeight = rowHeight
     }
+    
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         tableView.backgroundColor = backgroundColor.lighten(byPercentage: 0.05)

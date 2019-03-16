@@ -14,11 +14,12 @@
 		7A361B9A20BA23E5002A7231 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A361B9920BA23E5002A7231 /* Assets.xcassets */; };
 		7A361B9D20BA23E5002A7231 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A361B9B20BA23E5002A7231 /* LaunchScreen.storyboard */; };
 		7A361BA620D9289B002A7231 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A361BA520D9289B002A7231 /* Action.swift */; };
+		7A858D29223D406900B60083 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A858D28223D406900B60083 /* Default-568h@2x.png */; };
 		7AE081FB21F4CF6A00401E79 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE081FA21F4CF6A00401E79 /* CustomCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7A361B8F20BA23E4002A7231 /* TimeUnderTensionTrainer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeUnderTensionTrainer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A361B8F20BA23E4002A7231 /* RepCadenceTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RepCadenceTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A361B9220BA23E4002A7231 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7A361B9420BA23E4002A7231 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7A361B9720BA23E4002A7231 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -26,6 +27,7 @@
 		7A361B9C20BA23E5002A7231 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7A361B9E20BA23E5002A7231 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A361BA520D9289B002A7231 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		7A858D28223D406900B60083 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		7AE081FA21F4CF6A00401E79 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		8C7023E9930A45DFBD1A97B5 /* Pods-TimeUnderTensionTrainer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeUnderTensionTrainer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TimeUnderTensionTrainer/Pods-TimeUnderTensionTrainer.debug.xcconfig"; sourceTree = "<group>"; };
 		BBCF360D9D68B308F3BF20DA /* Pods-TimeUnderTensionTrainer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeUnderTensionTrainer.release.xcconfig"; path = "Pods/Target Support Files/Pods-TimeUnderTensionTrainer/Pods-TimeUnderTensionTrainer.release.xcconfig"; sourceTree = "<group>"; };
@@ -55,7 +57,8 @@
 		7A361B8620BA23E4002A7231 = {
 			isa = PBXGroup;
 			children = (
-				7A361B9120BA23E4002A7231 /* TimeUnderTensionTrainer */,
+				7A858D28223D406900B60083 /* Default-568h@2x.png */,
+				7A361B9120BA23E4002A7231 /* RepCadenceTimer */,
 				7A361B9020BA23E4002A7231 /* Products */,
 				DE6A7A948F55AC6AC37D528F /* Pods */,
 				55E1801065175ED2C1CA591A /* Frameworks */,
@@ -65,12 +68,12 @@
 		7A361B9020BA23E4002A7231 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7A361B8F20BA23E4002A7231 /* TimeUnderTensionTrainer.app */,
+				7A361B8F20BA23E4002A7231 /* RepCadenceTimer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7A361B9120BA23E4002A7231 /* TimeUnderTensionTrainer */ = {
+		7A361B9120BA23E4002A7231 /* RepCadenceTimer */ = {
 			isa = PBXGroup;
 			children = (
 				7A361B9220BA23E4002A7231 /* AppDelegate.swift */,
@@ -82,7 +85,7 @@
 				7A361B9E20BA23E5002A7231 /* Info.plist */,
 				7A361BA420D7DA42002A7231 /* Data Model */,
 			);
-			path = TimeUnderTensionTrainer;
+			path = RepCadenceTimer;
 			sourceTree = "<group>";
 		};
 		7A361BA420D7DA42002A7231 /* Data Model */ = {
@@ -105,9 +108,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7A361B8E20BA23E4002A7231 /* TimeUnderTensionTrainer */ = {
+		7A361B8E20BA23E4002A7231 /* RepCadenceTimer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7A361BA120BA23E5002A7231 /* Build configuration list for PBXNativeTarget "TimeUnderTensionTrainer" */;
+			buildConfigurationList = 7A361BA120BA23E5002A7231 /* Build configuration list for PBXNativeTarget "RepCadenceTimer" */;
 			buildPhases = (
 				AFD1D61916DF32C331BDE203 /* [CP] Check Pods Manifest.lock */,
 				7A361B8B20BA23E4002A7231 /* Sources */,
@@ -119,9 +122,9 @@
 			);
 			dependencies = (
 			);
-			name = TimeUnderTensionTrainer;
+			name = RepCadenceTimer;
 			productName = TimeUnderTensionTrainer;
-			productReference = 7A361B8F20BA23E4002A7231 /* TimeUnderTensionTrainer.app */;
+			productReference = 7A361B8F20BA23E4002A7231 /* RepCadenceTimer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -140,7 +143,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7A361B8A20BA23E4002A7231 /* Build configuration list for PBXProject "TimeUnderTensionTrainer" */;
+			buildConfigurationList = 7A361B8A20BA23E4002A7231 /* Build configuration list for PBXProject "RepCadenceTimer" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -153,7 +156,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7A361B8E20BA23E4002A7231 /* TimeUnderTensionTrainer */,
+				7A361B8E20BA23E4002A7231 /* RepCadenceTimer */,
 			);
 		};
 /* End PBXProject section */
@@ -164,6 +167,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A361B9D20BA23E5002A7231 /* LaunchScreen.storyboard in Resources */,
+				7A858D29223D406900B60083 /* Default-568h@2x.png in Resources */,
 				7A361B9A20BA23E5002A7231 /* Assets.xcassets in Resources */,
 				7A361B9820BA23E4002A7231 /* Main.storyboard in Resources */,
 			);
@@ -371,7 +375,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 363UGLFU5J;
-				INFOPLIST_FILE = TimeUnderTensionTrainer/Info.plist;
+				INFOPLIST_FILE = RepCadenceTimer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -390,7 +394,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 363UGLFU5J;
-				INFOPLIST_FILE = TimeUnderTensionTrainer/Info.plist;
+				INFOPLIST_FILE = RepCadenceTimer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -405,7 +409,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7A361B8A20BA23E4002A7231 /* Build configuration list for PBXProject "TimeUnderTensionTrainer" */ = {
+		7A361B8A20BA23E4002A7231 /* Build configuration list for PBXProject "RepCadenceTimer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7A361B9F20BA23E5002A7231 /* Debug */,
@@ -414,7 +418,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7A361BA120BA23E5002A7231 /* Build configuration list for PBXNativeTarget "TimeUnderTensionTrainer" */ = {
+		7A361BA120BA23E5002A7231 /* Build configuration list for PBXNativeTarget "RepCadenceTimer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7A361BA220BA23E5002A7231 /* Debug */,
