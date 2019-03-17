@@ -50,21 +50,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(FlatPowderBlueDark().hexValue())
-        
         UIApplication.shared.beginReceivingRemoteControlEvents()
         let commandCenter = MPRemoteCommandCenter.shared()
 
         commandCenter.togglePlayPauseCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
-            print("pause command pressed")
+            self.startButtonPressed(self.startTimerButton)
             return .success
         }
-
-        commandCenter.playCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
-            print("play command pressed")
-            return .success
-        }
-
         
         view.backgroundColor = backgroundColor
         
