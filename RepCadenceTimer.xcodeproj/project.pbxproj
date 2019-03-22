@@ -14,7 +14,6 @@
 		7A361B9A20BA23E5002A7231 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A361B9920BA23E5002A7231 /* Assets.xcassets */; };
 		7A361B9D20BA23E5002A7231 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A361B9B20BA23E5002A7231 /* LaunchScreen.storyboard */; };
 		7A361BA620D9289B002A7231 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A361BA520D9289B002A7231 /* Action.swift */; };
-		7A858D29223D406900B60083 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A858D28223D406900B60083 /* Default-568h@2x.png */; };
 		7AE081FB21F4CF6A00401E79 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE081FA21F4CF6A00401E79 /* CustomCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,7 +26,6 @@
 		7A361B9C20BA23E5002A7231 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7A361B9E20BA23E5002A7231 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A361BA520D9289B002A7231 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
-		7A858D28223D406900B60083 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		7AE081FA21F4CF6A00401E79 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		8C7023E9930A45DFBD1A97B5 /* Pods-TimeUnderTensionTrainer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeUnderTensionTrainer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TimeUnderTensionTrainer/Pods-TimeUnderTensionTrainer.debug.xcconfig"; sourceTree = "<group>"; };
 		BBCF360D9D68B308F3BF20DA /* Pods-TimeUnderTensionTrainer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeUnderTensionTrainer.release.xcconfig"; path = "Pods/Target Support Files/Pods-TimeUnderTensionTrainer/Pods-TimeUnderTensionTrainer.release.xcconfig"; sourceTree = "<group>"; };
@@ -57,7 +55,6 @@
 		7A361B8620BA23E4002A7231 = {
 			isa = PBXGroup;
 			children = (
-				7A858D28223D406900B60083 /* Default-568h@2x.png */,
 				7A361B9120BA23E4002A7231 /* RepCadenceTimer */,
 				7A361B9020BA23E4002A7231 /* Products */,
 				DE6A7A948F55AC6AC37D528F /* Pods */,
@@ -123,7 +120,7 @@
 			dependencies = (
 			);
 			name = RepCadenceTimer;
-			productName = TimeUnderTensionTrainer;
+			productName = RepCadenceTimer;
 			productReference = 7A361B8F20BA23E4002A7231 /* RepCadenceTimer.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -167,7 +164,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A361B9D20BA23E5002A7231 /* LaunchScreen.storyboard in Resources */,
-				7A858D29223D406900B60083 /* Default-568h@2x.png in Resources */,
 				7A361B9A20BA23E5002A7231 /* Assets.xcassets in Resources */,
 				7A361B9820BA23E4002A7231 /* Main.storyboard in Resources */,
 			);
@@ -380,7 +376,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.thecharliegriffin.TimeUnderTensionTrainer;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thecharliegriffin.RepCadenceTimer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -399,7 +395,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.thecharliegriffin.TimeUnderTensionTrainer;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thecharliegriffin.RepCadenceTimer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

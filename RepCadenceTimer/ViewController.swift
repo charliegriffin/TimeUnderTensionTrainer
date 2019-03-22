@@ -150,8 +150,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if let action = actionsList?[indexPath.row] {
             
-            print(action.name, action.duration)
-            
             let alert = UIAlertController(title: "Edit Action", message:"", preferredStyle: .alert)
             
 //            alert.addTextField { (name) in
@@ -301,8 +299,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             isValidNum = isValidNum && input.text!.count > 0
             action.isEnabled = isValidNum
         }
-        
-        print("validate num input updating action state")
     }
     
     
@@ -404,11 +400,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func updateCountdown() {
-        if totalTime > 1 {
-            totalTime -= 1
-        } else {
-            // Next Action
-            if(currentActionIndex < ((actionsList?.count)! - 1)){
+        totalTime -= 1
+        if(totalTime == 0){
+            if(actionsList?.count ?? 0 < 1){ // all actions have been deleted
+                self.startButtonPressed(self.startTimerButton)  // end timer
+                timerLabel.text = String(format: "%02d:%02d", 0, totalTime)
+                return;
+            } else if(currentActionIndex < ((actionsList?.count)! - 1)){
                 currentActionIndex += 1
             } else {
                 currentActionIndex = 0
@@ -443,7 +441,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             print("Error saving action\(action)")
         }
         
-        print("Calling reload data from save")
+        //print("Calling reload data from save")
         actionList.reloadData()
     }
     
