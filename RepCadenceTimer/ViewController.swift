@@ -247,10 +247,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             name.placeholder = "Add a new action"
         }
         
-        
-        
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
-            
             
             if(alert.textFields?[0].text! != ""){
                 let newAction = Action()
@@ -259,9 +256,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 newAction.index = (self.actionsList?.count ?? 0)
                 self.save(action: newAction)
             }
-            
-            
         }
+        
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
         
         alert.addAction(action)
