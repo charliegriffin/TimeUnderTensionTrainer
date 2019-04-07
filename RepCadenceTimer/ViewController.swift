@@ -47,9 +47,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let secondaryTextColor = UIColor.flatPowderBlue.lighten(byPercentage: 0.2)
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         UIApplication.shared.beginReceivingRemoteControlEvents()
         let commandCenter = MPRemoteCommandCenter.shared()
 
@@ -62,7 +63,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         actionList.frame = CGRect(x: 0, y: self.view.frame.height*0.4,
                                   width: self.view.frame.width, height: self.view.frame.height/2)
-//        actionList.register(UITableViewCell.self, forCellReuseIdentifier: "Cell") // for default style
         actionList.register(CustomCell.self, forCellReuseIdentifier: "Cell")
         actionList.dataSource = self
         actionList.delegate = self
@@ -71,11 +71,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         addActionButton.tintColor = defaultTextColor
         addActionButton.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
         
-        let startTextWidth = CGFloat(100);
+        let startTextWidth = CGFloat(125);
         let startTextHeight = CGFloat(100);
         
         startTimerButton.frame = CGRect(x: (self.view.frame.width-startTextWidth)*0.5, y: (self.view.frame.height-startTextHeight/2)*0.95, width: startTextWidth, height: startTextHeight)
-        startTimerButton.setTitle("Start", for: .normal)
+        startTimerButton.setTitle("START", for: .normal)
         startTimerButton.titleLabel?.font = UIFont(name: "Helvetica Neue", size: 40)
         startTimerButton.setTitleColor(defaultTextColor, for: .normal)
         startTimerButton.addTarget(self, action: #selector(startButtonPressed), for: .touchUpInside)
@@ -132,7 +132,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
-//        cell.textLabel?.text = actionsList?[indexPath.row].name ?? "No Actions Added Yet"  // for default style
         cell.actionName = actionsList?[indexPath.row].name ?? "No Actions Added Yet"
         let duration = actionsList?[indexPath.row].duration ?? 0
         cell.duration = String(duration)
@@ -151,11 +150,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if let action = actionsList?[indexPath.row] {
             
             let alert = UIAlertController(title: "Edit Action", message:"", preferredStyle: .alert)
-            
-//            alert.addTextField { (name) in
-//                name.placeholder = "Action Name"
-//                name.text = action.name
-//            }
             
             let updateAlertAction = UIAlertAction(title: "Update", style: .default) { (updateAction) in
 
@@ -204,7 +198,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func loadActions() {
         actionsList = realm.objects(Action.self).sorted(byKeyPath: "index", ascending: true)
-        //actionList.reloadData();
     }
     
     func updateSavedAction(oldAction: Action, newAction: Action) {
@@ -232,16 +225,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             currentAction = startAction
             currentActionDuration = startActionDuration
-            //            currentAction = actionsList?[0].name ?? ""
-//            currentActionDuration = actionsList?[0].duration ?? 10
             startTimer()
             timerRunning = true;
-            startTimerButton.setTitle("Stop", for: .normal);
+            startTimerButton.setTitle("STOP", for: .normal);
             currentActionLabel.text = "Get Set"
         } else {
             endTimer()
             timerRunning = !timerRunning;
-            startTimerButton.setTitle("Start", for: .normal);
+            startTimerButton.setTitle("START", for: .normal);
             currentActionLabel.text = "Press Start"
         }
         
@@ -441,7 +432,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             print("Error saving action\(action)")
         }
         
-        //print("Calling reload data from save")
         actionList.reloadData()
     }
     
@@ -456,7 +446,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         } catch {
             print("Error deleting action\(action)")
         }
-//        actionList.reloadData()
     }
     
     func reindexActions() {
@@ -496,7 +485,7 @@ extension ViewController: SwipeTableViewCellDelegate {
         // customize the action appearance
         let iconScale = 0.0007*(self.view.frame.height + 570)
         let deleteIcon = resizeImage(image: UIImage(named: "delete-icon")!, scale: iconScale)
-        deleteAction.image = deleteIcon//UIImage(named: "delete-icon")
+        deleteAction.image = deleteIcon
 
         return [deleteAction]
     }
